@@ -20,4 +20,5 @@
 
 @interface SearchAnimationView : UIView
 @property (nonatomic , assign)id<SearchAnimationViewDelegate> delegate;
+-(void)startAnimation;
 @end

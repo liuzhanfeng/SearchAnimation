@@ -13,7 +13,9 @@
 static const CGFloat backgroundLayer_W = 50;//放大镜大小
 static const CGFloat insideLayerSize = 20;//小放大镜大小
 static const CGFloat lineW = 2.5;
-//static const NSTimeInterval animationTimer = 2;//动画时长
+static const NSTimeInterval animationTimer = 0.3;//动画时长
+static const CGFloat max_w = 200;//动画时长
+
 
 //放大镜手柄size
 static const CGFloat big_handle_w = 25;
@@ -25,6 +27,8 @@ static const CGFloat min_handle_h = 3;
 @interface SearchAnimationView()
 {
     UIColor *basicColor;
+    BOOL spread;//是否是展开的
+    CGPoint originPoint;
 }
 @property (nonatomic , strong)CALayer *backgroundLayer;
 @property (nonatomic , strong)CALayer *handleLayer;
@@ -54,6 +58,7 @@ static const CGFloat min_handle_h = 3;
 
 -(void)setupView{
     self.backgroundColor = [UIColor blueColor];
+    spread = NO;
     basicColor = [UIColor whiteColor];
     [self.layer addSublayer:self.backgroundLayer];
     [self.layer addSublayer:self.handleLayer];
@@ -85,9 +90,8 @@ static const CGFloat min_handle_h = 3;
         handle.affineTransform = transform;
         [_backgroundLayer addSublayer:handle];
         
-        [_backgroundLayer addSublayer:self.roundLayer];
-
         
+        [_backgroundLayer addSublayer:self.roundLayer];
     }
     return _backgroundLayer;
 
@@ -96,10 +100,11 @@ static const CGFloat min_handle_h = 3;
 -(CALayer *)roundLayer{
     if (!_roundLayer) {
         _roundLayer = [[CALayer alloc] init];
-        _roundLayer.bounds = CGRectMake(0, 0, 0, 0);
+        _roundLayer.bounds = CGRectMake(0, 0, backgroundLayer_W - 10, backgroundLayer_W - 10);
+        _roundLayer.cornerRadius = (backgroundLayer_W - 10)/2;
         _roundLayer.backgroundColor = self.backgroundColor.CGColor;
-        _roundLayer.hidden = YES;
         _roundLayer.position = CGPointMake(backgroundLayer_W/2, backgroundLayer_W/2);
+        
     }
     return _roundLayer;
 }
@@ -112,10 +117,72 @@ static const CGFloat min_handle_h = 3;
         CGAffineTransform transform= CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(-45));
         _handleLayer.affineTransform = transform;
         _handleLayer.position = CGPointMake(backgroundLayer_W/2 - 5, CGRectGetMaxY(self.backgroundLayer.frame)+5);
+        
+        originPoint = _handleLayer.position;
     }
     return _handleLayer;
 }
 
+-(void)startAnimation{
+    spread = !spread;
+    [self spreadAnimation];
+    [self bigHandleAnimation];
+
+}
+
+-(void)spreadAnimation{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"bounds"];
+    animation.duration = animationTimer;
+    animation.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, spread?max_w:backgroundLayer_W,backgroundLayer_W)];
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    [self.backgroundLayer addAnimation:animation forKey:nil];
+}
+
+-(void)bigHandleAnimation{
+    CAAnimationGroup *round = [CAAnimationGroup animation];
+    round.duration = animationTimer;
+    round.animations = @[[self roundAnimation],[self roundCornerRadius]];
+    round.fillMode = kCAFillModeForwards;
+    round.removedOnCompletion = NO;
+    [self.roundLayer addAnimation:round forKey:nil];
+    
+    CAAnimationGroup *handle = [CAAnimationGroup animation];
+    handle.duration = animationTimer;
+    handle.fillMode = kCAFillModeForwards;
+    handle.removedOnCompletion = NO;
+    handle.animations = @[[self handlePosition],[self handlePositionBounds]];
+    [self.handleLayer addAnimation:handle forKey:nil];
+    
+}
+
+-(CABasicAnimation *)roundAnimation{
+    CABasicAnimation *round = [CABasicAnimation animationWithKeyPath:@"bounds"];
+    round.toValue = [NSValue valueWithCGRect:spread?CGRectMake(0, 0, 0, 0):CGRectMake(0, 0, backgroundLayer_W - 10, backgroundLayer_W - 10)];
+    round.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    return round;
+}
+
+-(CABasicAnimation *)roundCornerRadius{
+    CABasicAnimation *a = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+    a.toValue = spread?@(0):@((backgroundLayer_W - 10)/2);
+    return a;
+}
+
+//位移
+-(CABasicAnimation *)handlePosition{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    animation.toValue = [NSValue valueWithCGPoint:spread?CGPointMake(CGRectGetMaxX(self.backgroundLayer.frame), self.frame.size.height/2):originPoint];
+    return animation;
+}
+
+//size
+-(CABasicAnimation *)handlePositionBounds{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"bounds"];
+    animation.toValue = [NSValue valueWithCGRect:spread?CGRectMake(0, 0, 1, big_handle_h):CGRectMake(0, 0, big_handle_w, big_handle_h)];
+    return animation;
+
+}
 
 
 @end
