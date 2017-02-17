@@ -16,6 +16,10 @@
 		3C1FC5981E5596E500FD440B /* SearchAnimationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1FC5971E5596E500FD440B /* SearchAnimationTests.m */; };
 		3C1FC5A31E5596E500FD440B /* SearchAnimationUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1FC5A21E5596E500FD440B /* SearchAnimationUITests.m */; };
 		3C1FC5B21E5599EC00FD440B /* SearchAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1FC5B11E5599EC00FD440B /* SearchAnimationView.m */; };
+		3C1FC5B71E56E9EB00FD440B /* SearchAnimationButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1FC5B61E56E9EB00FD440B /* SearchAnimationButton.m */; };
+		3C1FC5B91E56EB2600FD440B /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C1FC5B81E56EB2600FD440B /* search.png */; };
+		3C1FC5BB1E56F27B00FD440B /* yuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C1FC5BA1E56F27B00FD440B /* yuan.png */; };
+		3C1FC5BD1E57021900FD440B /* small_search.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C1FC5BC1E57021900FD440B /* small_search.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +58,11 @@
 		3C1FC5A41E5596E500FD440B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C1FC5B01E5599EC00FD440B /* SearchAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchAnimationView.h; sourceTree = "<group>"; };
 		3C1FC5B11E5599EC00FD440B /* SearchAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchAnimationView.m; sourceTree = "<group>"; };
+		3C1FC5B51E56E9EB00FD440B /* SearchAnimationButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchAnimationButton.h; sourceTree = "<group>"; };
+		3C1FC5B61E56E9EB00FD440B /* SearchAnimationButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchAnimationButton.m; sourceTree = "<group>"; };
+		3C1FC5B81E56EB2600FD440B /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		3C1FC5BA1E56F27B00FD440B /* yuan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yuan.png; sourceTree = "<group>"; };
+		3C1FC5BC1E57021900FD440B /* small_search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = small_search.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,10 +113,15 @@
 		3C1FC57C1E5596E500FD440B /* SearchAnimation */ = {
 			isa = PBXGroup;
 			children = (
+				3C1FC5BC1E57021900FD440B /* small_search.png */,
+				3C1FC5BA1E56F27B00FD440B /* yuan.png */,
+				3C1FC5B81E56EB2600FD440B /* search.png */,
 				3C1FC5801E5596E500FD440B /* AppDelegate.h */,
 				3C1FC5811E5596E500FD440B /* AppDelegate.m */,
 				3C1FC5831E5596E500FD440B /* ViewController.h */,
 				3C1FC5841E5596E500FD440B /* ViewController.m */,
+				3C1FC5B51E56E9EB00FD440B /* SearchAnimationButton.h */,
+				3C1FC5B61E56E9EB00FD440B /* SearchAnimationButton.m */,
 				3C1FC5B01E5599EC00FD440B /* SearchAnimationView.h */,
 				3C1FC5B11E5599EC00FD440B /* SearchAnimationView.m */,
 				3C1FC5861E5596E500FD440B /* Main.storyboard */,
@@ -255,7 +269,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C1FC58D1E5596E500FD440B /* LaunchScreen.storyboard in Resources */,
+				3C1FC5BB1E56F27B00FD440B /* yuan.png in Resources */,
 				3C1FC58A1E5596E500FD440B /* Assets.xcassets in Resources */,
+				3C1FC5BD1E57021900FD440B /* small_search.png in Resources */,
+				3C1FC5B91E56EB2600FD440B /* search.png in Resources */,
 				3C1FC5881E5596E500FD440B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C1FC5851E5596E500FD440B /* ViewController.m in Sources */,
+				3C1FC5B71E56E9EB00FD440B /* SearchAnimationButton.m in Sources */,
 				3C1FC5B21E5599EC00FD440B /* SearchAnimationView.m in Sources */,
 				3C1FC5821E5596E500FD440B /* AppDelegate.m in Sources */,
 				3C1FC57F1E5596E500FD440B /* main.m in Sources */,
@@ -522,6 +540,7 @@
 				3C1FC5A91E5596E500FD440B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3C1FC5AA1E5596E500FD440B /* Build configuration list for PBXNativeTarget "SearchAnimationTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +549,7 @@
 				3C1FC5AC1E5596E500FD440B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3C1FC5AD1E5596E500FD440B /* Build configuration list for PBXNativeTarget "SearchAnimationUITests" */ = {
 			isa = XCConfigurationList;
@@ -538,6 +558,7 @@
 				3C1FC5AF1E5596E500FD440B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

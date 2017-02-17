@@ -11,7 +11,7 @@
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
 /**可以自定义常量**/
-static const CGFloat backgroundLayer_W = 25;//外圈放大镜大小
+static const CGFloat backgroundLayer_W = 15;//外圈放大镜大小
 static const CGFloat insideLayerSize = 10;//内圈小放大镜大小
 static const CGFloat lineW = 5;
 static const NSTimeInterval animationTimer = 0.3;//动画时长
