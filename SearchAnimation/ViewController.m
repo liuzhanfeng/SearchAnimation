@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    view = [[SearchAnimationView alloc] initWithFrame:CGRectMake(20, 100, 100, 100)];
+    view = [[SearchAnimationView alloc] initWithFrame:CGRectMake(0, 20, 50, 44)];//模拟导航条的大小
     [self.view addSubview:view];
     
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
