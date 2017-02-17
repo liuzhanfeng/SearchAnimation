@@ -72,8 +72,8 @@ static const NSTimeInterval animationTimer = 0.3;//动画时长
         _searchTextButton.layer.cornerRadius = searchText_H/2;
         _searchTextButton.hidden = YES;
         _searchTextButton.layer.anchorPoint = CGPointMake(0, 0.5);
-//        [_searchTextButton setTitle:@"请输入搜索内容" forState:UIControlStateNormal];
         [_searchTextButton setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        [_searchTextButton addTarget:self action:@selector(clickTextField) forControlEvents:UIControlEventTouchUpInside];
 //        UIImage *image = [UIImage imageNamed:@"yuan"];
 //        CGFloat top = 0; // 顶端盖高度
 //        CGFloat bottom = 0 ; // 底端盖高度
@@ -104,7 +104,7 @@ static const NSTimeInterval animationTimer = 0.3;//动画时长
                 [layer setValue:[NSValue valueWithCGRect:CGRectMake(0, 0, max_w, searchText_H)] forKey:@"bounds"];
                 CGRect rect = self.frame;
                 rect.size.width = max_w +  50;
-                self.frame = rect;                
+                self.frame = rect;
 
                 //显示内圈放大镜
 //                [self.searchTextButton setImage:[UIImage imageNamed:@"small_search"] forState:UIControlStateNormal];
@@ -130,14 +130,12 @@ static const NSTimeInterval animationTimer = 0.3;//动画时长
         CGRect rect = self.frame;
         rect.size.width = 50;
         self.frame = rect;
-        
-        [self.searchButton setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
-        [self.searchTextButton setImage:nil forState:UIControlStateNormal];
         [self.searchTextButton setTitle:nil forState:UIControlStateNormal];
 
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
             [layer setValue:[NSValue valueWithCGRect:CGRectZero] forKey:@"bounds"];
+            [self.searchButton setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
             self.searchButton.hidden = NO;
         } completion:^(BOOL finished) {
             self.searchTextButton.hidden = YES;
@@ -149,11 +147,19 @@ static const NSTimeInterval animationTimer = 0.3;//动画时长
 
 }
 
-
+-(void)clickTextField{
+    [self searchTextButton_small:self.searchTextButton.layer];
+    spread = NO;
+}
 
 -(void)clickSearch{
-    spread = YES;
     [self searchTextButton_big:self.searchTextButton.layer];
+    spread = YES;
+    NSLog(@"点击搜索按钮");
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickSearch:)]) {
+        [self.delegate clickSearchAction:self];
+    }
+
 }
 
 
@@ -164,8 +170,6 @@ static const NSTimeInterval animationTimer = 0.3;//动画时长
         [self searchTextButton_big:self.searchTextButton.layer];
     }
     spread = !spread;
-
-    
 }
 
 
