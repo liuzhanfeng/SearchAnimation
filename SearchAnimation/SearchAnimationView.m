@@ -14,7 +14,7 @@ static const CGFloat backgroundLayer_W = 50;//放大镜大小
 static const CGFloat insideLayerSize = 20;//小放大镜大小
 static const CGFloat lineW = 2.5;
 static const NSTimeInterval animationTimer = 0.3;//动画时长
-static const CGFloat max_w = 200;//动画时长
+static const CGFloat max_w = 200;//搜索框拉升长度
 
 
 //放大镜手柄size
@@ -29,6 +29,7 @@ static const CGFloat min_handle_h = 3;
     UIColor *basicColor;
     BOOL spread;//是否是展开的
     CGPoint originPoint;
+    CGFloat originWidth;//原始长度
 }
 @property (nonatomic , strong)CALayer *backgroundLayer;
 @property (nonatomic , strong)CALayer *handleLayer;
@@ -56,9 +57,17 @@ static const CGFloat min_handle_h = 3;
     return self;
 }
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSLog(@"点击搜索按钮");
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickSearchAction:)]) {
+        [self.delegate clickSearchAction:self];
+    }
+}
+
 -(void)setupView{
     self.backgroundColor = [UIColor blueColor];
     spread = NO;
+    originWidth = self.frame.size.width;
     basicColor = [UIColor whiteColor];
     [self.layer addSublayer:self.backgroundLayer];
     [self.layer addSublayer:self.handleLayer];
@@ -127,6 +136,11 @@ static const CGFloat min_handle_h = 3;
     spread = !spread;
     [self spreadAnimation];
     [self bigHandleAnimation];
+    CGRect frame = self.frame;
+    frame.size.width = spread?max_w+backgroundLayer_W:originWidth;
+    [UIView animateWithDuration:animationTimer animations:^{
+        self.frame = frame;
+    }];
 
 }
 
@@ -151,7 +165,7 @@ static const CGFloat min_handle_h = 3;
     handle.duration = animationTimer;
     handle.fillMode = kCAFillModeForwards;
     handle.removedOnCompletion = NO;
-    handle.animations = @[[self handlePosition],[self handlePositionBounds]];
+    handle.animations = @[[self handlePositionBounds],[self handlePosition],[self handleOpacity]];
     [self.handleLayer addAnimation:handle forKey:nil];
     
 }
@@ -169,6 +183,13 @@ static const CGFloat min_handle_h = 3;
     return a;
 }
 
+-(CABasicAnimation *)handleOpacity{
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animation.toValue = spread?@(0):@(1.0);
+    return animation;
+}
+
+
 //位移
 -(CABasicAnimation *)handlePosition{
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
@@ -179,7 +200,7 @@ static const CGFloat min_handle_h = 3;
 //size
 -(CABasicAnimation *)handlePositionBounds{
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"bounds"];
-    animation.toValue = [NSValue valueWithCGRect:spread?CGRectMake(0, 0, 1, big_handle_h):CGRectMake(0, 0, big_handle_w, big_handle_h)];
+    animation.toValue = [NSValue valueWithCGRect:spread?CGRectMake(0, 0, 0, big_handle_h):CGRectMake(0, 0, big_handle_w, big_handle_h)];
     return animation;
 
 }
