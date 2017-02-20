@@ -19,6 +19,6 @@
 
 @interface SearchAnimationButton : UIView
 @property (nonatomic , assign)id<SearchAnimationButtonDelegate> delegate;
-
+//展开 | 关闭 动画方法
 -(void)startAnimation;
 @end

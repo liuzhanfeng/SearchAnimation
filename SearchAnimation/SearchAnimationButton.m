@@ -90,17 +90,17 @@ static const NSTimeInterval animationTimer = 0.3;//动画时长
 
 -(void)searchTextButton_big:(CALayer *)layer{
     
-    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-        [layer setValue:[NSValue valueWithCGRect:CGRectMake(0, 0, searchText_H + 5, searchText_H +5)] forKey:@"bounds"];
+    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
+        [layer setValue:[NSValue valueWithCGRect:CGRectMake(0, 0, searchText_H, searchText_H)] forKey:@"bounds"];
         [self sendSubviewToBack:self.searchTextButton];
         [self.searchButton setImage:[UIImage imageNamed:@"small_search"] forState:UIControlStateNormal];
         self.searchTextButton.hidden = NO;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
-            [layer setValue:[NSValue valueWithCGRect:CGRectMake(0, 0, searchText_H, searchText_H)] forKey:@"bounds"];
-            
-        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
+//        [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
+//            [layer setValue:[NSValue valueWithCGRect:CGRectMake(0, 0, searchText_H, searchText_H)] forKey:@"bounds"];
+//            
+//        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
                 [layer setValue:[NSValue valueWithCGRect:CGRectMake(0, 0, max_w, searchText_H)] forKey:@"bounds"];
                 CGRect rect = self.frame;
                 rect.size.width = max_w +  50;
@@ -117,7 +117,7 @@ static const NSTimeInterval animationTimer = 0.3;//动画时长
 
                 
             } completion:nil];
-        }];
+//        }];
     }];
 
 }
@@ -125,7 +125,7 @@ static const NSTimeInterval animationTimer = 0.3;//动画时长
 
 -(void)searchTextButton_small:(CALayer *)layer{
     
-    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
         [layer setValue:[NSValue valueWithCGRect:CGRectMake(0, 0, searchText_H, searchText_H)] forKey:@"bounds"];
         CGRect rect = self.frame;
         rect.size.width = 50;
@@ -133,7 +133,7 @@ static const NSTimeInterval animationTimer = 0.3;//动画时长
         [self.searchTextButton setTitle:nil forState:UIControlStateNormal];
 
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
             [layer setValue:[NSValue valueWithCGRect:CGRectZero] forKey:@"bounds"];
             [self.searchButton setImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
             self.searchButton.hidden = NO;
@@ -156,7 +156,7 @@ static const NSTimeInterval animationTimer = 0.3;//动画时长
     [self searchTextButton_big:self.searchTextButton.layer];
     spread = YES;
     NSLog(@"点击搜索按钮");
-    if (self.delegate && [self.delegate respondsToSelector:@selector(clickSearch:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(clickSearchAction:)]) {
         [self.delegate clickSearchAction:self];
     }
 
